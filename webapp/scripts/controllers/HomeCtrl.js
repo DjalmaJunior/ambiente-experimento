@@ -24,22 +24,27 @@ angular.module('tutor').controller("HomeCtrl", function($scope, $location, $mdDi
 
     var users = [{
         name: "Alan",
+        gender: "man",
         points: 19,
         avatar: "assets/" + configService.getTheme() + "/images/ranking1.png"
     }, {
         name: "Valentine",
+        gender: "woman",
         points: 15,
         avatar: "assets/" + configService.getTheme() + "/images/ranking2.png"
     }, {
         name: "Francis",
+        gender: "man",
         points: 13,
         avatar: "assets/" + configService.getTheme() + "/images/ranking3.png"
     }, {
         name: "Danni",
+        gender: "woman",
         points: 7,
         avatar: "assets/" + configService.getTheme() + "/images/ranking4.png"
     }, {
         name: "Gil",
+        gender: "man",
         points: totalPoints,
         avatar: userAvatar
     }];
@@ -258,22 +263,27 @@ angular.module('tutor').controller("HomeCtrl", function($scope, $location, $mdDi
         //updates ranking
         users = [{
             name: "Alan",
+            gender: "man",
             points: 19,
             avatar: "assets/" + configService.getTheme() + "/images/ranking1.png"
         }, {
             name: "Valentine",
+            gender: "woman",
             points: 15,
             avatar: "assets/" + configService.getTheme() + "/images/ranking2.png"
         }, {
             name: "Francis",
+            gender: "man",
             points: 13,
             avatar: "assets/" + configService.getTheme() + "/images/ranking3.png"
         }, {
             name: "Danni",
+            gender: "woman",
             points: 7,
             avatar: "assets/" + configService.getTheme() + "/images/ranking4.png"
         }, {
             name: "Gil",
+            gender: "man",
             points: totalPoints,
             avatar: userAvatar
         }];
@@ -409,4 +419,60 @@ angular.module('tutor').controller("HomeCtrl", function($scope, $location, $mdDi
         };
 
     };
+
+    var ctx = document.getElementById("myChart");
+    
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Homens', 'Mulheres', 'Você'],
+            datasets: [{
+            data: [
+                users.filter((user) => (user.gender == 'man')).reduce((a,b) => (a + b.points), 0),
+                users.filter((user) => (user.gender == 'woman')).reduce((a,b) => (a + b.points), 0),
+                5
+            ],
+            backgroundColor: [
+                'blue',
+                'pink',
+                'green'
+            ],
+            borderWidth: 1
+            }]
+        },
+        options: {
+            plugins:{
+                legend: {
+                    display: false
+                }
+            },
+            responsive: false,
+            scales: {
+            xAxes: [{
+                ticks: {
+                maxRotation: 90,
+                minRotation: 80
+                },
+                gridLines: {
+                offsetGridLines: true // à rajouter
+                }
+            },
+            {
+                position: "top",
+                ticks: {
+                maxRotation: 90,
+                minRotation: 80
+                },
+                gridLines: {
+                offsetGridLines: true // et matcher pareil ici
+                }
+            }],
+            yAxes: [{
+                ticks: {
+                beginAtZero: true
+                }
+            }]
+            }
+        }
+    });
 });
